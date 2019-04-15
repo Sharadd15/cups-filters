@@ -1,8 +1,57 @@
-NEWS - OpenPrinting CUPS Filters v1.22.1 - 2019-02-15
+NEWS - OpenPrinting CUPS Filters v1.22.5 - 2019-04-07
 -----------------------------------------------------
+
+CHANGES IN V1.22.5
+
+	- foomatic-rip: Changed Ghostscript call to count pages in a
+	  PDF file to use "runpdfbegin" and not the undocumented
+	  Ghostscript internal "pdfdict", so that it works with
+	  Ghostscript 9.27 and later (Debian bug #926576, Arch Linux
+	  bug #62251).
+
+CHANGES IN V1.22.4
+
+	- cups-browsed: Fix broken trailing space removal on
+	  "NickName" (Pull request #103).
+	- pdftops: Emit PostScript Level 2 instead of Level 3 for
+	  Brother PostScript printers as at least some of them
+	  report to support level 3 but ontly work with Level 2
+	  (Ubuntu bug #1306849, comment #42).
+	- bannertopdf: When multiplying the page for N-up or Duplex
+	  printing one page too much was generated (Issue #102).
+
+CHANGES IN V1.22.3
+
+	- libcupsfilters: Added error checks for processing GIF, to
+	  avoid crashes or hangs on broken GIF files (Issues #81, #82,
+	  Pull request #100).
+	- cups-browsed: Added hint to the man page and configuration
+	  file that with "DebugLogging stderr" the logging output goes
+	  to journal or syslog if cups-browsed is running as system
+	  service (Issue #28).
 
 CHANGES IN V1.22.2
 
+	- cups-browsed: Let distribution of jobs sent to queues with
+	  "implicitclass" backend (usually clusters) be done by a
+	  "job-state" CUPS notification and not by
+	  "printer-state-changed" any more. The "job-state"
+	  notification already contains the job ID. Before we had to
+	  poll the job ID from CUPS via IPP which was sometimes
+	  unreliable (Issue #97).
+	- imagetopdf, imagetoraster, pdftopdf, libcupsfilters: Added
+	  new page scaling options: "fill" scales the input page
+	  (typically a photo) so that the output page (typically with
+	  different aspect ratio) gets completely filled, aloowing for
+	  some content of the input page getting lost. "crop-to-fit"
+	  allows for easy printing of documents on slightly different
+	  output page sizes (A4 <-> Letter) maintaining the size and
+	  centering and cropping into the destination page. Thanks to
+	  Dheeraj Yadav (dhirajyadav135 at gmail dot com) for the
+	  patch (Pull request #92).
+	- cups-browsed: Do not do IPP request for printer-is-shared
+          option for remote cups queues with CUPS 2.2.x and newer
+          (Pull request #91).
 	- cups-browsed: Fix crash bug when reading "Cluster"
 	  directive from configuration file (Issue #94).
 	- driverless: Updated man page as now also Mopria and
